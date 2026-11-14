@@ -6,6 +6,14 @@
   "scripts": {
     "dev": "node server.mjs",
     "start": "node server.mjs",
-    "check": "node --check dist/app.js"
+    "check": "node --check dist/app.js && node --check server.mjs && node --check api/db-status.js && node --check lib/database.js && node --check lib/database-status.js",
+    "test": "node --test",
+    "db:check": "node scripts/check-database.mjs"
+  },
+  "engines": {
+    "node": "24.x"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.2.1"
   }
 }
