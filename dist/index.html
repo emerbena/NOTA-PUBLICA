@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#820AD1">
+  <meta name="description" content="Nota Pública: un espacio para entender lo que pasa. Explora nuestra portada de actualidad, cultura, tecnología y medioambiente.">
+  <title>Nota Pública — Las historias que importan</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700;750&family=Manrope:wght@400;500;600;650;700;750;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a href="#contenido" class="skip-link">Saltar al contenido</a>
+  <div class="topbar"><div class="container topbar-inner"><span>Periodismo para mirar más allá.</span><span><span class="live-dot"></span> Una mirada independiente <span class="top-separator">/</span> <time id="today"></time></span></div></div>
+  <header class="container">
+    <div class="masthead">
+      <a class="brand" href="./" aria-label="Nota Pública, inicio">nota<span class="brand-second">pública<span class="brand-dot">.</span></span><span class="brand-star" aria-hidden="true">✳</span></a>
+      <p class="brand-manifesto">Menos ruido.<br><strong>Más contexto.</strong></p>
+      <div class="header-actions"><button class="icon-button search-toggle" aria-label="Abrir búsqueda" aria-expanded="false" aria-controls="search-panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></button><a href="#boletin" class="button button-purple">Súmate al boletín <span aria-hidden="true">↗</span></a></div>
+    </div>
+    <nav class="nav" aria-label="Categorías de noticias"><div class="nav-links"><button class="nav-link active" data-category="Todas" aria-pressed="true">Inicio</button><button class="nav-link" data-category="Actualidad" aria-pressed="false">Actualidad</button><button class="nav-link" data-category="Política" aria-pressed="false">Política</button><button class="nav-link" data-category="Economía" aria-pressed="false">Economía</button><button class="nav-link" data-category="Cultura" aria-pressed="false">Cultura</button><button class="nav-link" data-category="Tecnología" aria-pressed="false">Tecnología</button><button class="nav-link" data-category="Planeta" aria-pressed="false">Planeta</button></div><a href="#opinion" class="opinion-link">Otras miradas <span>↗</span></a></nav>
+    <div id="search-panel" class="search-panel" hidden><label for="search">¿Qué historia estás buscando?</label><div class="search-field"><input id="search" type="search" placeholder="Busca por tema, título o categoría…" autocomplete="off"><button id="clear-search" class="text-button">Limpiar</button></div></div>
+  </header>
+  <main id="contenido" class="container">
+    <div class="trending"><span class="trending-label"><span class="purple-dot"></span> EN CONVERSACIÓN</span><button data-search="ciudad">Ciudades que cambian <span>↗</span></button><button data-search="inteligencia">Inteligencia artificial <span>↗</span></button><button data-search="cultura">Cultura viva <span>↗</span></button><span class="demo-tag">EDICIÓN DEMO</span></div>
+    <section class="lead-section" aria-labelledby="lead-heading">
+      <div class="section-eyebrow"><span>LO QUE IMPORTA HOY</span><span>Una pausa para entender el mundo <span aria-hidden="true">↙</span></span></div>
+      <div class="lead-grid">
+        <article class="hero-story">
+          <img class="hero-image" src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1400&q=85" alt="Vista de una ciudad entre edificios y espacios verdes al atardecer" fetchpriority="high">
+          <div class="hero-shade"></div><div class="hero-top"><span class="tag tag-yellow">EN PORTADA</span><button class="bookmark on-dark" data-save="ciudad" aria-label="Guardar artículo sobre ciudades" aria-pressed="false"></button></div>
+          <div class="hero-copy"><span class="eyebrow light">ACTUALIDAD <span>•</span> CIUDAD Y SOCIEDAD</span><h1 id="lead-heading"><button data-story="ciudad">La ciudad que queremos también se construye a pie</button></h1><p>Recuperar las calles, encontrarnos en los parques y volver a poner a las personas en el centro.</p><div class="hero-meta"><span>Por <strong>Redacción Nota Pública</strong><span class="meta-dot">·</span> 6 min de lectura</span><button class="round-arrow" data-story="ciudad" aria-label="Leer La ciudad que queremos">↗</button></div></div>
+        </article>
+        <aside class="lead-sidebar" aria-label="Historias destacadas"><div class="sidebar-title"><span>EN EL RADAR</span><span class="radar-icon">↗</span></div>
+          <article class="radar-story"><div class="radar-text"><span class="eyebrow">TECNOLOGÍA</span><h2><button data-story="ia">La inteligencia artificial ya está aquí. ¿Y las preguntas difíciles?</button></h2><span class="read-time">5 min de lectura</span></div><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=300&q=80" alt="Figura digital que representa la inteligencia artificial" loading="lazy"></article>
+          <article class="radar-story"><div class="radar-text"><span class="eyebrow">CULTURA</span><h2><button data-story="libros">Las librerías que hacen barrio, una historia a la vez</button></h2><span class="read-time">4 min de lectura</span></div><img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=300&q=80" alt="Estanterías llenas de libros en una biblioteca" loading="lazy"></article>
+          <article class="radar-story"><div class="radar-text"><span class="eyebrow">PLANETA</span><h2><button data-story="bosques">Escuchar al bosque: otra forma de pensar el futuro</button></h2><span class="read-time">7 min de lectura</span></div><img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=300&q=80" alt="Luz del sol entre los árboles de un bosque" loading="lazy"></article>
+          <div class="radar-note"><span class="note-spark">✳</span><p>El mundo no cabe en un titular.<br><strong>Vamos un poco más allá.</strong></p></div>
+        </aside>
+      </div>
+    </section>
+    <section class="latest-section" id="historias" aria-labelledby="latest-heading"><div class="section-heading"><h2 id="latest-heading">Historias para estar al día<span>.</span></h2><button class="text-button view-all" id="view-all">Ver todas las noticias <span>↗</span></button></div><div class="filter-status" id="filter-status" role="status" hidden></div><div class="stories-grid" id="stories-grid"></div><div id="empty-results" class="empty-results" hidden><span>↗</span><h3>No encontramos esa historia</h3><p>Prueba con otra palabra o explora todas las categorías.</p><button id="reset-filters" class="button button-purple">Ver todas las historias</button></div></section>
+    <section class="perspective" id="opinion" aria-labelledby="perspective-heading"><div class="perspective-intro"><span class="eyebrow">OTRAS MIRADAS</span><h2 id="perspective-heading">Pensar distinto.<br>Entender mejor<span>.</span></h2><p>Ideas que abren conversaciones y nos invitan a cambiar de perspectiva.</p><button class="text-button" data-story="opinion">Leer la columna <span>↗</span></button></div><div class="quote"><span class="quote-mark" aria-hidden="true">“</span><blockquote>Estar informados no es saberlo todo. Es aprender a hacernos mejores preguntas.</blockquote><div class="quote-author"><span class="author-avatar">np.</span><div><strong>La mirada de Nota Pública</strong><span>Columna editorial · 3 min de lectura</span></div></div></div><span class="perspective-art" aria-hidden="true">✳</span></section>
+    <section class="newsletter" id="boletin" aria-labelledby="newsletter-heading"><div class="newsletter-copy"><span class="newsletter-kicker"><span class="yellow-dot"></span> UN CORREO. OTRA PERSPECTIVA.</span><h2 id="newsletter-heading">Lo importante,<br>sin tanto ruido<span>.</span></h2><p>Una selección de historias para comenzar el día<br class="desktop-break"> con contexto. Directamente en tu bandeja.</p></div><div class="newsletter-form-wrap"><form id="newsletter-form"><label for="email">Tu próxima buena lectura empieza aquí.</label><div class="email-field"><input type="email" id="email" name="email" placeholder="Tu correo electrónico" required autocomplete="email" aria-describedby="newsletter-note"><button type="submit" aria-label="Suscribirme al boletín">↗</button></div><label class="consent"><input type="checkbox" required> <span>Acepto la <button type="button" id="privacy-link">política de privacidad</button>.</span></label><p id="newsletter-note">Formulario de demostración. No se enviarán ni guardarán tus datos.</p><p id="newsletter-feedback" role="status" hidden></p></form></div></section>
+  </main>
+  <footer class="container"><div class="footer-main"><a class="brand footer-brand" href="./">nota<span class="brand-second">pública<span class="brand-dot">.</span></span><span class="brand-star" aria-hidden="true">✳</span></a><p>Las historias que importan.<br>El contexto que necesitas.</p><div class="footer-links"><button data-info="about">Quiénes somos ↗</button><button data-info="principles">Nuestros principios ↗</button><a href="#boletin">Nuestro boletín ↗</a></div></div><div class="footer-bottom"><span>© <span id="year"></span> Nota Pública · Prototipo editorial</span><span>Historias ilustrativas. Fotografías de Unsplash.</span><button data-info="privacy">Privacidad</button></div></footer>
+  <dialog id="article-dialog" aria-labelledby="dialog-title"><button class="dialog-close icon-button" aria-label="Cerrar ventana">✕</button><div id="dialog-content"></div></dialog><div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>
