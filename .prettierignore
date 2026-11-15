@@ -1,0 +1,18 @@
+node_modules/
+.artifacts/
+test-results/
+playwright-report/
+.next/
+.local-db/
+.local-media/
+next-env.d.ts
+drizzle/meta/
+*.tsbuildinfo
+package-lock.json
+# Se preserva el documento histórico de Fase 0 y el HTML/CSS de la landing.
+AUDITORIA_NOTA_PUBLICA.md
+docs/README_FASE_1.md
+dist/index.html
+dist/styles.css
+.openai/
+vercel.json

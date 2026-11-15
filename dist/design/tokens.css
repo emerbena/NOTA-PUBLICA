@@ -1,0 +1,34 @@
+:root {
+  --purple: #820ad1;
+  --dark: #21152b;
+  --yellow: #f5c542;
+  --white: #ffffff;
+  --gray: #f7f7fa;
+  --ink: #17151c;
+  --lilac: #f4eefc;
+  --muted: #6d6873;
+  --line: #e8e5eb;
+  --heading: 'Manrope', sans-serif;
+  --body: 'DM Sans', sans-serif;
+}
+/* Escalas extra?das del dise?o actual; no redefinen su aspecto. */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --font-size-body: 15px;
+  --radius-small: 4px;
+  --radius-button: 5px;
+  --radius-card: 6px;
+  --container-max: 1264px;
+  --container-gutter: 96px;
+  --header-desktop: 84px;
+  --header-tablet: 76px;
+  --header-mobile: 66px;
+}
+/* Media queries: 560px, 800px, 1100px, 1500px.
+   CSS no admite var() como condici?n de @media; conservar literales. */

@@ -5,3 +5,10 @@ node_modules/
 .env.*
 !.env.example
 .vercel/
+.artifacts/
+test-results/
+playwright-report/
+.next/
+.local-db/
+.local-media/
+*.tsbuildinfo

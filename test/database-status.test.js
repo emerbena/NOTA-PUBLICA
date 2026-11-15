@@ -7,7 +7,9 @@ const request = () => new Request('https://example.com/api/db-status');
 
 test('confirma conexión solo después de una consulta exitosa', async () => {
   let queried = false;
-  const handler = createDatabaseStatusHandler(async () => { queried = true; });
+  const handler = createDatabaseStatusHandler(async () => {
+    queried = true;
+  });
   const response = await handler(request());
   assert.equal(queried, true);
   assert.equal(response.status, 200);
@@ -39,7 +41,9 @@ test('oculta credenciales y detalles de errores del driver', async () => {
 
 test('rechaza escrituras sin consultar la base', async () => {
   const handler = createDatabaseStatusHandler(async () => assert.fail('No debe consultar'));
-  const response = await handler(new Request('https://example.com/api/db-status', { method: 'POST' }));
+  const response = await handler(
+    new Request('https://example.com/api/db-status', { method: 'POST' }),
+  );
   assert.equal(response.status, 405);
   assert.equal(response.headers.get('allow'), 'GET');
 });

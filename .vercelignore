@@ -1,0 +1,10 @@
+# La API histórica se conserva localmente; Next sirve src/app/api.
+/api/
+/.openai/
+/.artifacts/
+/.local-db/
+/.local-media/
+/test-results/
+/playwright-report/
+.env*
+!.env.example
