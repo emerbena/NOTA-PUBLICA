@@ -2,8 +2,10 @@ import { readFileSync } from 'node:fs';
 import { parseEnv } from 'node:util';
 import { Client } from 'pg';
 import { productionTarget, verifyProductionIdentity } from './production-target.mjs';
+import { assertLocalMaintenance } from './maintenance-guard';
 
 export function releaseConfig() {
+  assertLocalMaintenance();
   if (process.env.VERCEL || process.env.NODE_TLS_REJECT_UNAUTHORIZED === '0')
     throw new Error('La preparación se ejecuta localmente con TLS verificado.');
   const env = parseEnv(readFileSync(new URL('../.env.release.local', import.meta.url), 'utf8'));

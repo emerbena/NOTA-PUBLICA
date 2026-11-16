@@ -3,7 +3,7 @@ import { Pool, type PoolClient, type PoolConfig } from 'pg';
 export class DatabaseTargetError extends Error {
   readonly code = 'DATABASE_TARGET_REJECTED';
   constructor() {
-    super('Destino rechazado: verifica la rama de desarrollo autorizada y sus conexiones.');
+    super('Destino SQL rechazado: verifica el entorno y la identidad de rama y endpoint.');
   }
 }
 

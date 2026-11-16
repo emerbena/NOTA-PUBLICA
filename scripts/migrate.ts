@@ -4,6 +4,8 @@ import { db, closeDatabase } from '../src/database/client';
 import { Client } from 'pg';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { developmentTarget, verifyDevelopmentTarget } from '../src/database/development-target';
+import { assertLocalMaintenance } from './maintenance-guard';
+assertLocalMaintenance();
 if (
   process.env.NP_DATABASE_MODE !== 'local' &&
   (process.env.NP_ENV !== 'development' || process.env.NP_ALLOW_DEV_MIGRATION !== 'yes')

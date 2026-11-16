@@ -1,4 +1,5 @@
-import { put } from '@vercel/blob';
+import { uploadBlob, BlobUploadError } from '@/shared/blob-upload';
+import { BlobTargetError } from '@/shared/blob-target';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
@@ -44,13 +45,7 @@ export async function POST(request: Request) {
       await writeFile(`.local-media/${pathname}`, buffer, { flag: 'wx' });
       url = `/api/media/${pathname}`;
     } else {
-      if (!process.env.BLOB_READ_WRITE_TOKEN)
-        throw new HttpError(503, 'Falta conectar el almacén de objetos Vercel Blob.');
-      const result = await put(`editorial/${pathname}`, buffer, {
-        access: 'public',
-        contentType: mime,
-        addRandomSuffix: false,
-      });
+      const result = await uploadBlob(`editorial/${pathname}`, buffer, mime);
       url = result.url;
     }
     const [row] = await db()
@@ -72,6 +67,8 @@ export async function POST(request: Request) {
       .values({ actorId: actor.id, action: 'media.upload', entity: 'media', entityId: row.id });
     return Response.json(row);
   } catch (error) {
+    if (error instanceof BlobTargetError || error instanceof BlobUploadError)
+      return Response.json({ error: error.message }, { status: 503 });
     return errorResponse(error);
   }
 }

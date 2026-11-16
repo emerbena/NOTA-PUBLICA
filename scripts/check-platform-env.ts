@@ -2,7 +2,10 @@ import './runtime-env';
 import { z } from 'zod';
 import { developmentTarget } from '../src/database/development-target';
 import { mediaStorage } from '../src/shared/media-storage';
+import { deploymentTarget } from '../src/database/deployment-target';
+import { blobTarget } from '../src/shared/blob-target';
 try {
+  deploymentTarget();
   const local = process.env.NP_DATABASE_MODE === 'local';
   if (local && process.env.VERCEL) throw Error('El almacenamiento local no es válido en Vercel.');
   if (!local) {
@@ -19,14 +22,13 @@ try {
     throw Error('La autenticación fuera de localhost requiere HTTPS.');
   z.string().min(32).parse(process.env.CRON_SECRET);
   z.enum(['demo', 'live']).parse(process.env.CONTENT_MODE);
+  if (mediaStorage() === 'blob') blobTarget();
   console.log(
     `Configuración válida para ${local ? 'PostgreSQL local' : 'PostgreSQL remoto'}. No se imprimen secretos ni se abre conexión.`,
   );
-  if (mediaStorage() === 'blob' && !process.env.BLOB_READ_WRITE_TOKEN)
-    console.log('Multimedia remota pendiente: configura Vercel Blob antes de subir imágenes.');
 } catch {
   console.error(
-    'Configuración incompleta o insegura. Revisa .env.example: modo de base, URL privada, origen, secretos, TLS y modo de contenido.',
+    'Configuración incompleta o insegura. Revisa .env.example: modo de base, URL privada, origen, secretos, TLS, identidad Blob y modo de contenido.',
   );
   process.exitCode = 1;
 }

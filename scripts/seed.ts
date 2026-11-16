@@ -1,6 +1,8 @@
 import './runtime-env';
 import { db, closeDatabase } from '../src/database/client';
 import { seedDemo } from '../src/database/seed-demo';
+import { assertLocalMaintenance } from './maintenance-guard';
+assertLocalMaintenance();
 if (process.env.VERCEL_ENV === 'production')
   throw new Error('El seed no se ejecuta en producción.');
 if (

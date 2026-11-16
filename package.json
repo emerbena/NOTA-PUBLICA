@@ -23,6 +23,7 @@
     "test:e2e:legacy": "playwright test --config playwright.config.js",
     "verify": "npm run check && npm run typecheck && npm run lint && npm run format:check && npm test && npm run test:integration",
     "dev:legacy": "node server.mjs",
+    "prebuild": "tsx scripts/check-preview.ts",
     "build": "next build",
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",

@@ -4,6 +4,7 @@ import { PGlite } from '@electric-sql/pglite';
 import { Pool } from 'pg';
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { developmentTarget, DevelopmentPool } from './development-target';
+import { deploymentTarget, DeploymentPool } from './deployment-target';
 import * as schema from './schema';
 
 export type Database = NodePgDatabase<typeof schema>;
@@ -17,6 +18,8 @@ export function db(): Database {
   const scoped = scope.getStore();
   if (scoped) return scoped as Database;
   if (globalDb.npDb) return globalDb.npDb;
+  // El entorno de Vercel prevalece: ambos despliegues validan identidad real.
+  const deployment = deploymentTarget();
   if (process.env.NP_DATABASE_MODE === 'local') {
     if (process.env.VERCEL) throw new Error('La base local no puede ejecutarse en Vercel.');
     const client = new PGlite(process.env.NP_LOCAL_DATABASE || '.local-db/main');
@@ -29,13 +32,17 @@ export function db(): Database {
     if (!target && process.env.NP_EXPECTED_NEON_BRANCH_ID)
       throw new Error('La protección de Neon development requiere NP_ENV=development.');
     const config = {
-      connectionString: target?.pooled || connectionString,
+      connectionString: deployment?.pooled || target?.pooled || connectionString,
       max: 5,
       connectionTimeoutMillis: 8000,
       idleTimeoutMillis: 10000,
       statement_timeout: 15000,
     };
-    const client = target ? new DevelopmentPool(config, target) : new Pool(config);
+    const client = deployment
+      ? new DeploymentPool(config, deployment)
+      : target
+        ? new DevelopmentPool(config, target)
+        : new Pool(config);
     client.on('error', () => console.error('Conexión SQL inactiva interrumpida.'));
     globalDb.npDb = postgresDrizzle(client, { schema });
     globalDb.npClose = () => client.end();
