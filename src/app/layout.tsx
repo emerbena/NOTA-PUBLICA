@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: { default: 'Nota Pública — La información que importa', template: '%s | Nota Pública' },
   description: 'Periodismo para entender lo que pasa.',
   icons: { icon: '/favicon.png' },
-  robots: process.env.CONTENT_MODE === 'demo' ? { index: false, follow: false } : undefined,
+  robots: process.env.CONTENT_MODE === 'demo' ? { index: false, follow: true } : undefined,
 };
 export default async function Layout({ children }: { children: React.ReactNode }) {
   await headers(); // nonce por petición; evita HTML estático con nonce reutilizado.

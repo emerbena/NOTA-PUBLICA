@@ -211,3 +211,17 @@
   padding: 16px;
   border-top: 1px solid var(--line);
 }
+
+.edition-notice {
+  margin: 10px 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.demo-label {
+  display: block;
+  color: var(--purple);
+  font-size: 11px;
+  font-weight: 650;
+  margin-block: 4px;
+}

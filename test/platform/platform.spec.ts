@@ -34,15 +34,30 @@ test('portal dinámico, rutas, SEO, búsqueda y responsive', async ({ page, requ
     'href',
     /\/noticias\/demo-ciudad$/,
   );
-  expect(await page.locator('script[type="application/ld+json"]').textContent()).toContain(
-    'NewsArticle',
+  const structured = JSON.parse(
+    (await page.locator('script[type="application/ld+json"]').textContent())!,
   );
+  expect(structured['@type']).toBe('CreativeWork');
+  expect(structured.headline).toContain('[Demostración]');
+  expect(structured.description).toContain('no es una noticia verificada');
+  for (const selector of ['meta[property="og:title"]', 'meta[name="twitter:title"]'])
+    await expect(page.locator(selector)).toHaveAttribute('content', /Demostración/);
+  for (const selector of ['meta[property="og:description"]', 'meta[name="twitter:description"]'])
+    await expect(page.locator(selector)).toHaveAttribute('content', /no es una noticia verificada/);
+  await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'website');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+  await expect(page.locator('.demo-notice')).toBeVisible();
   await page.goto('/noticias?q=no-hay-esta-noticia');
   await expect(page.getByText('Todavía no hay publicaciones en esta sección.')).toBeVisible();
   for (const width of [1440, 800, 390]) {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto('/');
     await expect(page.locator('.masthead .brand img')).toBeVisible();
+    await expect(page.locator('.edition-notice')).toBeVisible();
+    await expect(page.locator('.demo-tag')).toBeVisible();
+    for (const article of await page.locator('.radar-story, .story-card').all())
+      await expect(article.locator('.demo-label')).toBeVisible();
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
     expect(
       await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
     ).toBe(true);
@@ -50,7 +65,13 @@ test('portal dinámico, rutas, SEO, búsqueda y responsive', async ({ page, requ
   }
   expect((await request.get('/noticias/inexistente')).status()).toBe(404);
   expect((await request.get('/api/jobs/publish')).status()).toBe(401);
-  expect((await request.get('/sitemap.xml')).status()).toBe(200);
+  const sitemap = await request.get('/sitemap.xml');
+  expect(sitemap.status()).toBe(200);
+  expect(await sitemap.text()).not.toContain('<loc>');
+  const robots = await request.get('/robots.txt');
+  expect(robots.status()).toBe(200);
+  expect(await robots.text()).toMatch(/^Allow: \/$/m);
+  expect(await robots.text()).not.toMatch(/^Disallow: \/$/m);
 });
 test('CMS real: crear, revisar, aprobar, publicar y editar sin filtrar el borrador', async ({
   page,

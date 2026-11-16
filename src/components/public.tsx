@@ -91,6 +91,11 @@ export function Header() {
             Otras miradas <span>↗</span>
           </Link>
         </nav>
+        {process.env.CONTENT_MODE === 'demo' && (
+          <p className="edition-notice">
+            Edición de demostración · Contenido ilustrativo, no noticias verificadas.
+          </p>
+        )}
       </header>
     </>
   );
@@ -143,6 +148,7 @@ export function StoryCard({ story }: { story: PublicStory }) {
         </Link>
         <Bookmark id={a.slug} />
       </div>
+      {a.isDemo && <small className="demo-label">Demostración</small>}
       <h3>
         <Link href={`/noticias/${a.slug}`}>{r.title}</Link>
       </h3>

@@ -1018,7 +1018,8 @@ body:has(dialog[open]) {
     gap: 20px;
   }
   .demo-tag {
-    display: none;
+    display: inline;
+    flex-shrink: 0;
   }
   .newsletter {
     padding: 38px;

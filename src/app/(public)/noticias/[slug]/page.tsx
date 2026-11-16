@@ -5,27 +5,29 @@ import { publicStory, publicArticles } from '@/database/queries';
 import { StoryGrid, minutes } from '@/components/public';
 import { Share } from '@/components/public-client';
 import { cleanContent } from '@/shared/sanitize';
+import { demoPresentation } from '@/shared/demo';
 import { structuredData } from '@/shared/structured-data';
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const story = await publicStory((await params).slug);
   if (!story) return { title: 'No encontrada' };
   const { article: a, revision: r } = story;
+  const presentation = demoPresentation(a.isDemo, r.title, r.summary);
   return {
-    title: r.title,
-    description: r.summary,
+    title: presentation.title,
+    description: presentation.description,
     alternates: { canonical: `/noticias/${a.slug}` },
     openGraph: {
-      type: 'article',
-      title: r.title,
-      description: r.summary,
+      type: a.isDemo ? 'website' : 'article',
+      title: presentation.title,
+      description: presentation.description,
       images: r.cover ? [r.cover] : [],
       publishedTime: a.publishedAt?.toISOString(),
       modifiedTime: r.createdAt.toISOString(),
     },
     twitter: {
       card: 'summary_large_image',
-      title: r.title,
-      description: r.summary,
+      title: presentation.title,
+      description: presentation.description,
       images: r.cover ? [r.cover] : [],
     },
     robots: a.isDemo ? { index: false, follow: true } : undefined,
@@ -36,11 +38,12 @@ export default async function Article({ params }: { params: Promise<{ slug: stri
   if (!story) notFound();
   const { article: a, revision: r, author, category, sources, tags } = story;
   const related = await publicArticles({ category: category.slug, limit: 4 });
+  const presentation = demoPresentation(a.isDemo, r.title, r.summary);
   const structured = {
     '@context': 'https://schema.org',
-    '@type': 'NewsArticle',
-    headline: r.title,
-    description: r.summary,
+    '@type': presentation.schemaType,
+    headline: presentation.title,
+    description: presentation.description,
     image: r.cover ? [r.cover] : [],
     datePublished: a.publishedAt?.toISOString(),
     dateModified: r.createdAt.toISOString(),
@@ -109,7 +112,7 @@ export default async function Article({ params }: { params: Promise<{ slug: stri
             </ul>
           </section>
         )}
-        <Share title={r.title} />
+        <Share title={presentation.title} />
       </article>
       <section>
         <h2>Noticias relacionadas</h2>

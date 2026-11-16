@@ -79,6 +79,7 @@ export default async function Home() {
                 <article className="radar-story" key={story.article.id}>
                   <div className="radar-text">
                     <span className="eyebrow">{story.category.name.toUpperCase()}</span>
+                    {story.article.isDemo && <small className="demo-label">Demostración</small>}
                     <h2>
                       <Link href={`/noticias/${story.article.slug}`}>{story.revision.title}</Link>
                     </h2>

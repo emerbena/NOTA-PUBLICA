@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: process.env.CONTENT_MODE === 'demo' ? '/' : ['/admin', '/api'],
+      disallow: ['/admin', '/api'],
     },
     sitemap: `${process.env.SITE_URL || 'https://www.notapublica.com'}/sitemap.xml`,
   };
